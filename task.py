@@ -1,9 +1,3 @@
-import requests
-import os
-import json
-import sys, getopt
-import config
-import torch
 
 from dotenv import load_dotenv, find_dotenv
 from langchain_core.prompts import PromptTemplate
