@@ -8,6 +8,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 class Task:
 
+
     @staticmethod
     def generatePRD(industry, company, description, strategy, persona, problem, openaikey, modelname="gpt-3.5-turbo", temp=1):
         """
