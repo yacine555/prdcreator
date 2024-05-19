@@ -21,7 +21,7 @@ def runstreamlit():
     # st.set_page_config(layout="wide" , page_title="Img 2 audio story", page_icon = "🚀")
     st.title("Create a PRD in a  minute")
 
-    openaikey = st.sidebar.text_input("Openai Key",placeholder="sk-....", key="openaikey")
+    # openaikey = st.sidebar.text_input("Openai Key",placeholder="sk-....", key="openaikey")
 
     llm = "gpt-3.5-turbo-0125"
     # # Add a selectbox to the sidebar:
