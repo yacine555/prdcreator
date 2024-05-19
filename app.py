@@ -16,15 +16,17 @@ def runstreamlit():
 
     openaikey = st.sidebar.text_input("Openai Key",placeholder="sk-....", key="openaikey")
 
-    # Add a selectbox to the sidebar:
-    llm = st.sidebar.selectbox(
-        "Select the LLM model:",
-        ("gpt-3.5-turbo-0125","gpt-3.5-turbo", "gpt-4-1106-preview", "gpt-3.5-turbo-1106"),
-    )
+    llm = "gpt-3.5-turbo-0125"
+    # # Add a selectbox to the sidebar:
+    # llm = st.sidebar.selectbox(
+    #     "Select the LLM model:",
+    #     ("gpt-3.5-turbo-0125","gpt-3.5-turbo", "gpt-4-1106-preview", "gpt-3.5-turbo-1106"),
+    # )
 
-    temp_slider = st.sidebar.slider(
-        label="Temperature", min_value=0.0, max_value=1.0, value=1.0, step=0.1
-    )
+    temp = 1
+    # temp = st.sidebar.slider(
+    #     label="Temperature", min_value=0.0, max_value=1.0, value=1.0, step=0.1
+    # )
 
 
     industry = st.text_input("Industry you work for: (e.g: technology company)","technology company",placeholder="technology company", key="industry") 
@@ -42,7 +44,7 @@ def runstreamlit():
         if st.button("Generate PRD", key="B1"):
             with st.spinner("Generating PRD..."):
                 prddocument = Task.generatePRD(
-                    industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp_slider
+                    industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp
                 )
                 
                 expander.write(prddocument)
@@ -61,7 +63,7 @@ def runstreamlit():
         if bt2:
             with st.spinner("Update PRD..."):
                 prddocument2 = Task.refinePRD(
-                    st.session_state['PRD'], instruction, industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp_slider
+                    st.session_state['PRD'], instruction, industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp
                 )
             expander2.write(prddocument2)
             st.success("Updated!")
