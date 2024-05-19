@@ -52,7 +52,8 @@ class Task:
             ("user", human_template)
         ])
 
-        llm=ChatOpenAI(model_name=modelname, temperature=temp)
+        llm = ChatOpenAI(model=modelname, temperature=temp)
+
         output_parser = StrOutputParser()
 
         chain = chat_prompt | llm | output_parser
