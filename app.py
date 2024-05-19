@@ -37,11 +37,11 @@ def runstreamlit():
 
 
     industry = st.text_input("Industry you work for: (e.g: technology company)","technology company",placeholder="technology company", key="industry") 
-    company = st.text_input("Name of your company: (e.g: www.veeva.com)","www.veeva.com", placeholder="www.veeva.com", key="company")
-    description = st.text_input("Description of your company: (e.g: sells CRM app for drug manufacturers)","sells CRM app for drug manufacturers" ,placeholder="sells CRM app for drug manufacturers", key="description")
-    strategy = st.text_input("Strategy of your company:(e.g: serve the commercial and sales organization of drug manufacturers)","serve the commercial and sales organization of drug manufacturers", placeholder="serve the commercial and sales organization of drug manufacturers", key="strategy") 
-    persona = st.text_input("User persona:(e.g: sales rep)","sales rep", placeholder="sales rep", key="persona") 
-    problem = st.text_input("What is what the product solve:(e.g: we want to build a solution to help pharmaceutical sales reps connect remotely with doctors. This an additional feature)","we want to build a solution to help pharmaceutical sales reps connect remotely with doctors. This an additional feature", placeholder="we want to build a solution to help pharmaceutical sales reps connect remotely with doctors. This an additional feature.", key="problem") 
+    company = st.text_input("Name of your company: (e.g: www.yourcompany.com)","www.veeva.com", placeholder="www.veeva.com", key="company")
+    description = st.text_input("Description of your company activity: (e.g: build HR softwares for mid-size companies)","sells CRM app for drug manufacturers" ,placeholder="sells CRM app for drug manufacturers", key="description")
+    strategy = st.text_input("Strategy of your company:(e.g: Help )","Build a connected HR and Payroll Experience", placeholder="serve the commercial and sales organization of drug manufacturers", key="strategy") 
+    persona = st.text_input("User persona:(e.g: Payroll manager)","sales rep", placeholder="sales rep", key="persona") 
+    problem = st.text_input("What does your feature solve:(e.g: we want to build a solution to help payroll managers ensure pay is processed accurately and in compliance with local regulation.","we want to build a solution to help pharmaceutical sales reps connect remotely with doctors. This an additional feature", placeholder="we want to build a solution to help pharmaceutical sales reps connect remotely with doctors. This an additional feature.", key="problem") 
 
     prddocument = ""
 
