@@ -14,6 +14,8 @@ def runstreamlit():
     # st.set_page_config(layout="wide" , page_title="Img 2 audio story", page_icon = "🚀")
     st.title("Create a PRD in a  minute")
 
+    openaikey = st.sidebar.text_input("Openai Key",placeholder="sk-....", key="openaikey")
+
     # Add a selectbox to the sidebar:
     llm = st.sidebar.selectbox(
         "Select the LLM model:",
@@ -23,6 +25,7 @@ def runstreamlit():
     temp_slider = st.sidebar.slider(
         label="Temperature", min_value=0.0, max_value=1.0, value=1.0, step=0.1
     )
+
 
     industry = st.text_input("Industry you work for: (e.g: technology company)","technology company",placeholder="technology company", key="industry") 
     company = st.text_input("Name of your company: (e.g: www.veeva.com)","www.veeva.com", placeholder="www.veeva.com", key="company")
@@ -39,7 +42,7 @@ def runstreamlit():
         if st.button("Generate PRD", key="B1"):
             with st.spinner("Generating PRD..."):
                 prddocument = Task.generatePRD(
-                    industry, company, description, strategy, persona, problem, modelname=llm, temp=temp_slider
+                    industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp_slider
                 )
                 
                 expander.write(prddocument)
@@ -58,7 +61,7 @@ def runstreamlit():
         if bt2:
             with st.spinner("Update PRD..."):
                 prddocument2 = Task.refinePRD(
-                    st.session_state['PRD'], instruction, industry, company, description, strategy, persona, problem, modelname=llm, temp=temp_slider
+                    st.session_state['PRD'], instruction, industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp_slider
                 )
             expander2.write(prddocument2)
             st.success("Updated!")

@@ -9,7 +9,7 @@ from langchain_core.output_parsers import StrOutputParser
 class Task:
 
     @staticmethod
-    def generatePRD(industry, company, description, strategy, persona, problem, modelname="gpt-3.5-turbo", temp=1):
+    def generatePRD(industry, company, description, strategy, persona, problem, openaikey, modelname="gpt-3.5-turbo", temp=1):
         """
         Huggingface task to generate a PRD based on some company input
         Use Longchain prompt template with OpenAI LLM
@@ -52,7 +52,13 @@ class Task:
             ("user", human_template)
         ])
 
-        llm = ChatOpenAI(model=modelname, temperature=temp)
+    
+        llm = None
+
+        if(len(openaikey) == 0):
+            llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0)
+        else:
+            llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key=openaikey)
 
         output_parser = StrOutputParser()
 
@@ -65,7 +71,7 @@ class Task:
 
 
     @staticmethod
-    def refinePRD(prdDocument, instruction, industry, company, description, strategy, persona, problem, modelname="gpt-3.5-turbo", temp=1):
+    def refinePRD(prdDocument, instruction, industry, company, description, strategy, persona, problem, openaikey, modelname="gpt-3.5-turbo", temp=1):
         """
         Huggingface task to refine a PRD based on some company input
         Use Longchain prompt template with OpenAI LLM
@@ -94,11 +100,12 @@ class Task:
             ]
         )
 
-        llm = LLMChain(
-            llm=ChatOpenAI(model_name=modelname, temperature=temp),
-            prompt=chat_prompt,
-            verbose=True,
-        )
+        llm = None
+
+        if(len(openaikey) == 0):
+            llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0)
+        else:
+            llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key=openaikey)
 
         prd = llm.predict(prdDocument=prdDocument, instruction=instruction, industry=industry, company=company, description=description, strategy=strategy, persona=persona,problem=problem)
 
