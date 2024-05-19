@@ -1,10 +1,17 @@
 import sys, getopt
+import os
 import streamlit as st
 from dotenv import load_dotenv, find_dotenv
 from task import Task
 
 
 load_dotenv(find_dotenv())
+
+openaikey = os.environ.get("OPENAI_API_KEY")
+if(len(openaikey) == 0):
+    openaikey = st.secrets["OPENAI_API_KEY"]
+
+
 
 st.markdown("# PMDAY PRD DEMO")
 st.sidebar.markdown("# Main")
@@ -40,7 +47,7 @@ def runstreamlit():
 
 
     if 'PRD' not in st.session_state:
-        expander = st.expander("PRD document")
+        expander = st.expander("PRD document", expanded=True)
         if st.button("Generate PRD", key="B1"):
             with st.spinner("Generating PRD..."):
                 prddocument = Task.generatePRD(
@@ -56,7 +63,7 @@ def runstreamlit():
             st.success("Done!")
 
     if 'PRD' in st.session_state:
-        expander2 = st.expander("PRD document updated ")
+        expander2 = st.expander("PRD document updated ", expanded=True)
         instruction = st.text_input("PRD modif instruction: (e.g: add one more user case)","add one more user case",placeholder="add one more user case", key="instruction") 
         bt2 = st.button("Update PRD", key="B2")
         
