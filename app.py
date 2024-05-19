@@ -1,19 +1,10 @@
-import requests
-import config
-import os
-import json
 import sys, getopt
-from dotenv import load_dotenv, find_dotenv
-
-from task import Task
-
 import streamlit as st
-import subprocess
+from dotenv import load_dotenv, find_dotenv
+from task import Task
 
 
 load_dotenv(find_dotenv())
-config.openapi_key = os.getenv("OPENAI_API_KEY")
-config.huggingfapi_key = os.getenv("HUGGINGFACEHUB_API_TOCKEN")
 
 st.markdown("# PMDAY PRD DEMO")
 st.sidebar.markdown("# Main")
