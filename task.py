@@ -107,6 +107,10 @@ class Task:
         else:
             llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key=openaikey)
 
-        prd = llm.predict(prdDocument=prdDocument, instruction=instruction, industry=industry, company=company, description=description, strategy=strategy, persona=persona,problem=problem)
+        output_parser = StrOutputParser()
+
+        chain = chat_prompt | llm | output_parser
+
+        prd = chain.invoke({"prdDocument":prdDocument, "instruction":instruction,"industry":industry,"company":company,"description":description, "strategy":strategy, "persona":persona,"problem":problem})
 
         return prd
