@@ -166,6 +166,7 @@ if 'prdupdatedbool' in st.session_state:
         expander2 = st.expander("Updated PRD document - round " + str(st.session_state.prdupdateround), expanded=True)
         expander2.write(prdDocUpdated)
         st.success("PRD Updated!")
+        st.download_button('Download PRD', prdDocUpdated, file_name="Anotherpmday_prd_document.md")  # Defaults to 'text/plain'
 
 
 def main(argv):
