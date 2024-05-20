@@ -34,11 +34,21 @@ inputs.forEach(input => {
         }
     });
 });
+                
 </script>
  """,height=0)
 
 llm = "gpt-3.5-turbo-0125"
 temp = 1
+
+if "modelID" in st.session_state:
+    llm = st.session_state.modelID
+    print("model:" +llm)
+
+if "tempID" in st.session_state:
+    temp = st.session_state.tempID
+    print("temp:" + str(temp))
+
 prddocument = ""
 prddocument2 = ""
 
@@ -128,19 +138,21 @@ def runstreamlit():
     
     # openaikey = st.sidebar.text_input("Openai Key",placeholder="sk-....", key="openaikey")
 
-    
-    # # Add a selectbox to the sidebar:
-    # llm = st.sidebar.selectbox(
-    #     "Select the LLM model:",
-    #     ("gpt-3.5-turbo-0125","gpt-3.5-turbo", "gpt-4-1106-preview", "gpt-3.5-turbo-1106"),
-    # )
+    if "custom" in st.query_params:
 
-    
-    # temp = st.sidebar.slider(
-    #     label="Temperature", min_value=0.0, max_value=1.0, value=1.0, step=0.1
-    # )
+        c = st.sidebar.container()
 
-    text_container = st.container()
+        c.divider()
+        llm = c.selectbox(
+            "Select the LLM model:",
+            ("gpt-3.5-turbo-0125","gpt-3.5-turbo", "gpt-4o-2024-05-13", "gpt-4o", "gpt-3.5-turbo-1106"),key="modelID"
+        )
+        
+        temp = c.slider(
+            label="Temperature", min_value=0.0, max_value=1.0, value=1.0, step=0.1, key="tempID"
+        )
+
+        c.divider()
 
     if 'prdavailable' in st.session_state:
         st.markdown("#### Provide instruction for PRD refinement:")
@@ -150,7 +162,6 @@ def runstreamlit():
 
 
 if 'prdgenerated' not in st.session_state:
-        st.session_state.prdgenerated = False
         st.button('Generate PRD', on_click=click_button_Generate_PRD)
 else:
     prdDoc = st.session_state.prddoc

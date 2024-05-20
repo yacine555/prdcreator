@@ -10,7 +10,7 @@ class Task:
 
 
     @staticmethod
-    def generatePRD(industry, company, description, strategy, persona, problem, openaikey, modelname="gpt-3.5-turbo", temp=1):
+    def generatePRD(industry, company, description, strategy, persona, problem, openaikey, modelname="gpt-3.5-turbo-0125", temp=1):
         """
         Huggingface task to generate a PRD based on some company input
         Use Longchain prompt template with OpenAI LLM
@@ -57,7 +57,7 @@ class Task:
         ])
 
     
-        llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key=openaikey)
+        llm = ChatOpenAI(model=modelname, temperature=temp, api_key=openaikey)
 
         output_parser = StrOutputParser()
 
@@ -70,7 +70,7 @@ class Task:
 
 
     @staticmethod
-    def refinePRD(prdDocument, instruction, industry, company, description, strategy, persona, problem, openaikey, modelname="gpt-3.5-turbo", temp=1):
+    def refinePRD(prdDocument, instruction, industry, company, description, strategy, persona, problem, openaikey, modelname="gpt-3.5-turbo-0125", temp=1):
         """
         Huggingface task to refine a PRD based on some company input
         Use Longchain prompt template with OpenAI LLM
@@ -101,7 +101,7 @@ class Task:
         )
 
  
-        llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key=openaikey)
+        llm = ChatOpenAI(model=modelname, temperature=temp, api_key=openaikey)
 
         output_parser = StrOutputParser()
 
