@@ -30,9 +30,9 @@ class Task:
         Propose a product requirement document  for the user persona {persona};
         The problem the app solves is that {problem};
         
-        Propose a PRD using this document template:
+        Propose a PRD using this document template and answer in mardown language having eaach section title with 3 hash:
         
-        CONTENT: The contents of a PRD
+        The contents of a PRD should follow this sections:
             Title: Give this project a distinct name and a code name.
             Change History: Add an inital description of the PRD change, including who changed it which os PMday Tool, when they changed it which is today date, and what they changed. The initial version should start with 0.1
             Problem statement: Briefly, what is this project about?  What problem are we trying to solve? Why are you doing it? Clearly define the problem statement
@@ -48,6 +48,7 @@ class Task:
             Designs: Include any needed early sketches, and throughout the project, link to the actual designs once they're available.
             Open Issues: List at least 3 key factors you still need to figure out?
             Other Considerations: This is a catch-all for anything else, such as if you make a key decision to remove or add to the project's scope.
+
         """
 
         chat_prompt = ChatPromptTemplate.from_messages([
