@@ -34,7 +34,7 @@ class Task:
         
         CONTENT: The contents of a PRD
             Title: Give this project a distinct name and a code name.
-            Change History: Describe each important change to the PRD, including who changed it, when they changed it, and what they changed.
+            Change History: Add an inital description of the PRD change, including who changed it which os PMday Tool, when they changed it which is today date, and what they changed. The initial version should start with 0.1
             Problem statement: Briefly, what is this project about?  What problem are we trying to solve? Why are you doing it? Clearly define the problem statement
             Success Metrics: What are the success metrics that indicate you're achieving your product goals for the enhancement? Be specific with figures when possible. 
             Messaging: What's the product messaging marketing will use to describe this product to customers, both new and existing?
@@ -87,6 +87,7 @@ class Task:
 
         human_template = """
         Uddate the PRD Content below by doing this instruction: {instruction}; and output the updated PRD document
+        Also, add a line to the Change History section version with the instruction description and by incrementing the version
         
         PRD Content: {prdDocument} 
         """
