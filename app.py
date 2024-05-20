@@ -110,11 +110,15 @@ def click_button_Update_PRD():
     print("industry: " + industry)
     print("instr3: " + st.session_state.instructionID)
     with st.spinner("Updating PRD..."):
-        prddocument2 = Task.refinePRD(
-            st.session_state.prddoc, st.session_state.instructionID, industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp
+
+        prddocref = st.session_state.prddoc
+        if 'prdupdatedbool' in st.session_state:
+            prddocref = st.session_state.prdDocUpdated
+        prddocumentUpdated = Task.refinePRD(
+            prddocref, st.session_state.instructionID, industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp
         )
-        st.session_state.prddoc2 = prddocument2
-        st.session_state.prdupdated = True
+        st.session_state.prdDocUpdated = prddocumentUpdated
+        st.session_state.prdupdatedbool = True
         st.session_state.prdgeneratedExpended = False
         st.session_state.prdupdateround += 1
         
@@ -157,10 +161,10 @@ else:
         st.success("Done Generating!")
   
 
-if 'prdupdated' in st.session_state:
-        prdDoc2 = st.session_state.prddoc2
+if 'prdupdatedbool' in st.session_state:
+        prdDocUpdated = st.session_state.prdDocUpdated
         expander2 = st.expander("Updated PRD document - round " + str(st.session_state.prdupdateround), expanded=True)
-        expander2.write(prdDoc2)
+        expander2.write(prdDocUpdated)
         st.success("PRD Updated!")
 
 

@@ -87,6 +87,7 @@ class Task:
 
         human_template = """
         Uddate the PRD Content below by doing this instruction: {instruction}; and output the updated PRD document
+        Also, add a line to the Change History section version with the instruction description and by incrementing the version
         
         PRD Content: {prdDocument} 
         """
