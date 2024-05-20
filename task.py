@@ -35,13 +35,15 @@ class Task:
         CONTENT: The contents of a PRD
             Title: Give this project a distinct name and a code name.
             Change History: Describe each important change to the PRD, including who changed it, when they changed it, and what they changed.
-            Overview: Briefly, what is this project about?  Why are you doing it?
-            Success Metrics: What are the success metrics that indicate you're achieving your internal goals for the project?
+            Problem statement: Briefly, what is this project about?  What problem are we trying to solve? Why are you doing it? Clearly define the problem statement
+            Success Metrics: What are the success metrics that indicate you're achieving your product goals for the enhancement? Be specific with figures when possible. 
             Messaging: What's the product messaging marketing will use to describe this product to customers, both new and existing?
             Timeline/Release Planning: What's the overall schedule you're working towards?
-            Personas: Who are the target personas for this product, and which is the key persona? For each persona, explain the benefits.
-            Persona objectives: These are full stories about how various personas will use the product in context.
-            User Stories/Features/Requirements: These are the distinct, prioritized features along with a short explanation as to why this feature is important. Add at least six user stories. Use the framework template: As a 'user persona', I want to 'action', so that I can get 'benefits'. Rank them.
+            Personas: Who are the target persona? For each persona, explain the benefits.
+            Persona objectives: These are full stories about how various personas will use the product in context. Highlight their goals, pain points and behavior.
+            User Stories/Features/Requirements: Break down requirements in priority High, Medium, Low. Add Acceptance Criteria for each feature. Add at least six user stories. Use the framework template: As a 'user persona', I want to 'action', so that I can get 'benefits'. Put them in table.
+            Risks and assumptions: Identify potential risks, integration dependencies and user/market assumptions to mitigate issues early.
+            Competitive alternatives: Analyze the competitive alternative landscape and differentiation. 
             Not in Scope: list some ideas that you do not usually develop as a version 1 and why. 
             Designs: Include any needed early sketches, and throughout the project, link to the actual designs once they're available.
             Open Issues: List at least 3 key factors you still need to figure out?
@@ -54,12 +56,7 @@ class Task:
         ])
 
     
-        llm = None
-
-        if(len(openaikey) == 0):
-            llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0)
-        else:
-            llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key=openaikey)
+        llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key=openaikey)
 
         output_parser = StrOutputParser()
 
@@ -89,9 +86,9 @@ class Task:
         """
 
         human_template = """
-        Update the PRD Document provided below by folowing this instruction: {instruction};
+        Uddate the PRD Content below by doing this instruction: {instruction}; and output the updated PRD document
         
-        PRD Document: {prdDocument} 
+        PRD Content: {prdDocument} 
         """
 
         chat_prompt = ChatPromptTemplate.from_messages(
@@ -101,12 +98,8 @@ class Task:
             ]
         )
 
-        llm = None
-
-        if(len(openaikey) == 0):
-            llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0)
-        else:
-            llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key=openaikey)
+ 
+        llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0, api_key=openaikey)
 
         output_parser = StrOutputParser()
 
