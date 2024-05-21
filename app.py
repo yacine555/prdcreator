@@ -23,7 +23,6 @@ visibility: hidden;
 
 st.markdown(hide_submit_text, unsafe_allow_html=True)
 
-
 components.html( """
 <script>
 const inputs = window.parent.document.querySelectorAll('input');
@@ -66,71 +65,65 @@ if 'prdupdateround' not in st.session_state:
 
 st.markdown("# Another PMday -  PRDDay tool")
 st.title("Create a Product Requirement Document in minutes")
+st.sidebar.markdown("# Another PMday")
 
 text_input_container = st.container()
 
-if 'prdgenerated' not in st.session_state:
-    industry = text_input_container.text_input("Industry you work for: (e.g: technology company)","technology company",placeholder="technology company", key="industryID") 
-    company = text_input_container.text_input("Your company name:","veeva", placeholder="Mycompany", key="companyID")
-    description = text_input_container.text_input("Description of your company activity:","sells CRM app for drug manufacturers" ,placeholder="build HR softwares for mid-size companies", key="descriptionID")
-    strategy = text_input_container.text_input("Your company strategy:","Accelerate sales and commercial execution", placeholder="Build a connected HR and Payroll Experience", key="strategyID") 
-    persona = text_input_container.text_input("User persona:","sales rep", placeholder="Payroll manager", key="personaID") 
-    problem = text_input_container.text_input("What does your feature solve:","we want to build a solution to help pharmaceutical sales reps connect remotely with doctors", placeholder="Help payroll managers ensure pay is accurate and in compliance with local regulation.", key="problemID") 
+def validateform():
 
-    st.sidebar.markdown("# Another PMday")
-    st.session_state.prdgeneratedExpended = True
-else:
-    prddocument = st.session_state.prddoc
-    industry = st.session_state.industry
-    company = st.session_state.company
-    description = st.session_state.description
-    strategy = st.session_state.strategy
-    persona = st.session_state.persona
-    problem = st.session_state.problem
+    return (
+            "industryID" in st.session_state and st.session_state.industryID != "" and
+            "companyID" in st.session_state and st.session_state.companyID != ""
+            "descriptionID" in st.session_state and st.session_state.descriptionID != "" and
+            "strategyID" in st.session_state and st.session_state.strategyID != "" and
+            "personaID" in st.session_state and st.session_state.personaID != "" and
+            "problemID" in st.session_state and st.session_state.problemID != ""
+            )
+
+def validateRefineform():
+
+    return (
+            "instructionID" in st.session_state and st.session_state.instructionID != ""
+            )
     
-    st.sidebar.markdown("# Another PMday")
-    st.sidebar.markdown("### PRD Information:")
-    st.sidebar.markdown("**Industry:** " + industry)
-    st.sidebar.markdown("**Company:** " + company)
-    st.sidebar.markdown("**Description:** " + description)
-    st.sidebar.markdown("**Strategy:** " + strategy)
-    st.sidebar.markdown("**Persona:** " + persona)
-    st.sidebar.markdown("**Problem:** " + problem)
-
 
 def click_button_Generate_PRD():
-    with st.spinner("Generating PRD..."):
-        prddocument = Task.generatePRD(
-            industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp
-        )
-        st.session_state.prddoc = prddocument
-        
-        st.session_state.industry = industry
-        st.session_state.company = company
-        st.session_state.description = description
-        st.session_state.strategy = strategy
-        st.session_state.persona = persona
-        st.session_state.problem = problem
+    validform = validateform()
+    st.session_state.validform = validform
+    if validform:
+        with st.spinner("Generating PRD..."):
+            prddocument = Task.generatePRD(
+                industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp
+            )
+            st.session_state.prddoc = prddocument
+            
+            # st.session_state.industry = industry
+            # st.session_state.company = company
+            # st.session_state.description = description
+            # st.session_state.strategy = strategy
+            # st.session_state.persona = persona
+            # st.session_state.problem = problem
 
-        st.session_state.prdgenerated = True
-        st.session_state.prdgeneratedExpended = True
-
+            st.session_state.prdgenerated = True
+            st.session_state.prdgeneratedExpended = True
+            
 
 def click_button_Update_PRD():
-    print("industry: " + industry)
-    print("instr3: " + st.session_state.instructionID)
-    with st.spinner("Updating PRD..."):
+    validform = validateRefineform()
+    st.session_state.validform = validform
+    if validform:
+        with st.spinner("Updating PRD..."):
 
-        prddocref = st.session_state.prddoc
-        if 'prdupdatedbool' in st.session_state:
-            prddocref = st.session_state.prdDocUpdated
-        prddocumentUpdated = Task.refinePRD(
-            prddocref, st.session_state.instructionID, industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp
-        )
-        st.session_state.prdDocUpdated = prddocumentUpdated
-        st.session_state.prdupdatedbool = True
-        st.session_state.prdgeneratedExpended = False
-        st.session_state.prdupdateround += 1
+            prddocref = st.session_state.prddoc
+            if 'prdupdatedbool' in st.session_state:
+                prddocref = st.session_state.prdDocUpdated
+            prddocumentUpdated = Task.refinePRD(
+                prddocref, st.session_state.instructionID, industry, company, description, strategy, persona, problem, openaikey, modelname=llm, temp=temp
+            )
+            st.session_state.prdDocUpdated = prddocumentUpdated
+            st.session_state.prdupdatedbool = True
+            st.session_state.prdgeneratedExpended = False
+            st.session_state.prdupdateround += 1
         
 
 def runstreamlit():
@@ -154,12 +147,42 @@ def runstreamlit():
 
         c.divider()
 
-    if 'prdavailable' in st.session_state:
-        st.markdown("#### Provide instruction for PRD refinement:")
-        instruction = st.text_area("","Add more user stories",placeholder="Refine your instruction", max_chars=1000, key="instructionID") 
-        bt2 = st.button("Refine PRD", on_click=click_button_Update_PRD, key="B2")
-            
+        industry = "technology company"
+        company = "Veeva"
+        description = "sells CRM app for drug manufacturers" 
+        strategy = "Accelerate sales and commercial execution"
+        persona = "sales rep"
+        problem = "we want to build a solution to help pharmaceutical sales reps connect remotely with doctors"
+    
 
+if 'prdgenerated' not in st.session_state:
+    industry = text_input_container.text_input("Industry you work for: (e.g: technology company)",  placeholder="technology company", key="industryID") 
+    company = text_input_container.text_input("Your company name:", placeholder="Mycompany", key="companyID")
+    description = text_input_container.text_input("Description of your company activity:", placeholder="build HR softwares for mid-size companies", key="descriptionID")
+    strategy = text_input_container.text_input("Your company strategy:", placeholder="Build a connected HR and Payroll Experience", key="strategyID") 
+    persona = text_input_container.text_input("User persona:", placeholder="Payroll manager", key="personaID") 
+    problem = text_input_container.text_input("What does your feature solve:", placeholder="Help payroll managers ensure pay is accurate and in compliance with local regulation.", key="problemID") 
+
+    st.session_state.prdgeneratedExpended = True
+else:
+    if validateform():
+        st.session_state.validform = True
+        prddocument = st.session_state.prddoc
+        industry = st.session_state.industryID
+        company = st.session_state.companyID
+        description = st.session_state.descriptionID
+        strategy = st.session_state.strategyID
+        persona = st.session_state.personaID
+        problem = st.session_state.problemID
+    
+        st.sidebar.markdown("### PRD Information:")
+        st.sidebar.markdown("**Industry:** " + industry)
+        st.sidebar.markdown("**Company:** " + company)
+        st.sidebar.markdown("**Description:** " + description)
+        st.sidebar.markdown("**Strategy:** " + strategy)
+        st.sidebar.markdown("**Persona:** " + persona)
+        st.sidebar.markdown("**Problem:** " + problem)
+        
 
 if 'prdgenerated' not in st.session_state:
         st.button('Generate PRD', on_click=click_button_Generate_PRD)
@@ -179,11 +202,21 @@ if 'prdupdatedbool' in st.session_state:
         st.success("PRD Updated!")
         st.download_button('Download PRD', prdDocUpdated, file_name="Anotherpmday_prd_document.md")  # Defaults to 'text/plain'
 
+if 'prdavailable' in st.session_state:
+    st.markdown("#### Provide instruction for PRD refinement:")
+    instruction = st.text_area("Instruction",placeholder="Refine your instruction", max_chars=1000, key="instructionID") 
+    bt2 = st.button("Refine PRD", on_click=click_button_Update_PRD, key="B2")
+          
+
+if 'validform' in st.session_state:
+    if not st.session_state.validform:
+        st.error("All fields are required!")
+
 
 def main(argv):
 
     opts, args = getopt.getopt(argv, "ht:", ["task="])
-    print("opts ", opts)
+    #print("opts ", opts)
 
     runstreamlit()
 
