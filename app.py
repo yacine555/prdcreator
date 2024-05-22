@@ -32,6 +32,18 @@ visibility: hidden;
 st.markdown(hide_submit_text, unsafe_allow_html=True)
 
 components.html( """
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ND8B1L23GB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ND8B1L23GB');
+</script>
+
 <script>
 const inputs = window.parent.document.querySelectorAll('input');
 inputs.forEach(input => {
