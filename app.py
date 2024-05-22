@@ -154,22 +154,24 @@ def runstreamlit():
         )
 
         c.divider()
+    
 
+if 'prdgenerated' not in st.session_state:
+
+    if "custom" in st.query_params:
         industry = "technology company"
         company = "Veeva"
         description = "sells CRM app for drug manufacturers" 
         strategy = "Accelerate sales and commercial execution"
         persona = "sales rep"
         problem = "we want to build a solution to help pharmaceutical sales reps connect remotely with doctors"
-    
 
-if 'prdgenerated' not in st.session_state:
-    industry = text_input_container.text_input("Industry you work for: (e.g: technology company)",  placeholder="technology company", key="industryID") 
-    company = text_input_container.text_input("Your company name:", placeholder="Mycompany", key="companyID")
-    description = text_input_container.text_input("Description of your company activity:", placeholder="build HR softwares for mid-size companies", key="descriptionID")
-    strategy = text_input_container.text_input("Your company strategy:", placeholder="Build a connected HR and Payroll Experience", key="strategyID") 
-    persona = text_input_container.text_input("User persona:", placeholder="Payroll manager", key="personaID") 
-    problem = text_input_container.text_input("What does your feature solve:", placeholder="Help payroll managers ensure pay is accurate and in compliance with local regulation.", key="problemID") 
+    industry = text_input_container.text_input("Industry you work for: (e.g: technology company)", industry, placeholder="technology company", key="industryID") 
+    company = text_input_container.text_input("Your company name:",company, placeholder="Mycompany", key="companyID")
+    description = text_input_container.text_input("Description of your company activity:", description, placeholder="build HR softwares for mid-size companies", key="descriptionID")
+    strategy = text_input_container.text_input("Your company strategy:", strategy, placeholder="Build a connected HR and Payroll Experience", key="strategyID") 
+    persona = text_input_container.text_input("User persona:", persona, placeholder="Payroll manager", key="personaID") 
+    problem = text_input_container.text_input("What does your feature solve:", problem, placeholder="Help payroll managers ensure pay is accurate and in compliance with local regulation.", key="problemID") 
 
     st.session_state.prdgeneratedExpended = True
 else:
