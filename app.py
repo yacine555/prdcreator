@@ -8,10 +8,18 @@ import streamlit.components.v1 as components
 
 load_dotenv(find_dotenv())
 
+
+
 openaikey = os.environ.get("OPENAI_API_KEY")
 if(len(openaikey) == 0):
     openaikey = st.secrets["OPENAI_API_KEY"]
 
+LANGCHAIN_TRACING_V2 = os.environ.get("LANGCHAIN_TRACING_V2")
+LANGCHAIN_API_KEY = os.environ.get("LANGCHAIN_TRACING_V2")
+
+if(len(LANGCHAIN_TRACING_V2) == 0):
+    os.environ['LANGCHAIN_TRACING_V2'] = st.secrets["LANGCHAIN_TRACING_V2"]
+    os.environ['LANGCHAIN_API_KEY'] = st.secrets["LANGCHAIN_API_KEY"]
 
 hide_submit_text = """
 <style>
