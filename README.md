@@ -16,6 +16,10 @@ pipenv install
 pipenv shell
 ```
 
+### update package 
+```
+pipenv run pip install -r requirements.txt
+```
 ### run the app
 
 ```

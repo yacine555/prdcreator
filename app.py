@@ -78,13 +78,20 @@ strategy = ""
 persona = ""
 problem = ""
 
-
 instruction = ""
 if 'prdupdateround' not in st.session_state:
     st.session_state.prdupdateround = 0
 
 st.markdown("# Another PMday -  PRDDay tool")
 st.title("Create a Product Requirement Document in minutes")
+st.markdown("### Instructions: ")
+st.markdown('1: Provide some details about your product and company strategy. The more context you provide, the better the PRD outcome.')
+st.markdown('2: Hit \'Generate PRD\'')
+st.markdown('3: Review the results and refine if needed.')
+st.divider()
+
+
+
 st.sidebar.markdown("# Another PMday")
 
 text_input_container = st.container()
